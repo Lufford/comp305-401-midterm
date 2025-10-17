@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -26,6 +28,12 @@ public class PlayerController : MonoBehaviour
     private Vector3 mousePos;
     private float cooldownTimer = 0.5f;
 
+    private int maxHealth = 3;
+    private int currentHealth;
+    public Slider healthBar;
+    public int damageAmount = 1;
+
+
     void Awake() => cam = Camera.main;
 
     public bool isGrounded
@@ -37,6 +45,7 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
+        currentHealth = maxHealth;
     }
 
     void Update()
@@ -49,7 +58,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (movement.x < 0)
         {
-            sr.flipX= false;
+            sr.flipX = false;
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded || Input.GetKeyDown(KeyCode.Space) && doubleJumps > 0)
@@ -72,10 +81,30 @@ public class PlayerController : MonoBehaviour
             cooldownTimer = 0;
         }
         cooldownTimer += Time.deltaTime;
+
+        //checking for game over
+        if (currentHealth <= 0)
+        {
+            currentHealth = 0;
+            SceneManager.LoadScene("GameOverScreen");
+        }
+    }
+    
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (currentHealth > 0)
+        {
+            currentHealth = -damageAmount;
+            
+            //UI change
+            healthBar.value = currentHealth;
+        }
     }
 
     private void FixedUpdate()
     {
         rb.linearVelocity = new Vector2(movement.x * speed, rb.linearVelocityY);
     }
+    
+    
 }
