@@ -48,18 +48,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int score = 0;
     private Dictionary<int, int> levelScore = new Dictionary<int, int>();
     private bool gameOver = false;
-    private bool levelTransitioning = false;
     private int level = 0;
 
 
     private void Start()
     {
         Debug.Log("Level"+level);
-    }
-
-    private void Update()
-    {
-        if (gameOver) return;
     }
 
     public void SetGameOver()
@@ -91,7 +85,6 @@ public class GameManager : MonoBehaviour
     public IEnumerator LevelChange()
     {
         Debug.Log("Level Changed");
-        levelTransitioning = true;
         levelScore[level] = score; 
 
         yield return 1f;
@@ -100,7 +93,7 @@ public class GameManager : MonoBehaviour
         score = 0;
 
         SceneManager.LoadScene(level);
-        levelTransitioning = false;
+        StartCoroutine(FindScoreBoard());
     }
 
     private IEnumerator FindScoreBoard()
