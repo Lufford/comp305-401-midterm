@@ -14,6 +14,8 @@ public class TurretControl : MonoBehaviour
     [SerializeField] private GameObject bullet;
     private float cooldown = 3f;
     private float timer = 0;
+
+    public int scoreValue = 1;
     
 
     void Start()
@@ -40,6 +42,8 @@ public class TurretControl : MonoBehaviour
         }
         if (health == 0)
         {
+
+            GameManager.Instance.updateScore(scoreValue);
             Destroy(gameObject);
         }
     }
