@@ -103,6 +103,7 @@ public class GameManager : MonoBehaviour
 
         SceneManager.LoadScene(level);
         levelTransitioning = false;
+        StartCoroutine(FindScoreBoard());
     }
 
     private IEnumerator FindScoreBoard()
