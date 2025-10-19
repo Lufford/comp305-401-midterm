@@ -94,9 +94,7 @@ public class GameManager : MonoBehaviour
         levelTransitioning = true;
         levelScore[level] = score; 
 
-        Time.timeScale = 0f;
-        yield return new WaitForSecondsRealtime(5f);
-        Time.timeScale = 1f;
+        yield return 1f;
 
         level++;
         score = 0;
