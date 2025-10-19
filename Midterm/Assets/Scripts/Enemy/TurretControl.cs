@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class TurretControl : MonoBehaviour
@@ -11,7 +12,7 @@ public class TurretControl : MonoBehaviour
     private bool isShooting;
 
     [SerializeField] private GameObject bullet;
-    private float cooldown = 5f;
+    private float cooldown = 3f;
     private float timer = 0;
     
 
@@ -33,7 +34,10 @@ public class TurretControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timer += Time.deltaTime;
+        if(target != null)
+        { 
+            timer += Time.deltaTime;
+        }
         if (health == 0)
         {
             Destroy(gameObject);
@@ -44,7 +48,7 @@ public class TurretControl : MonoBehaviour
     {
         if (timer > cooldown && isShooting)
         {
-            Instantiate(bullet, transform.position, rotate.rotation);
+            Instantiate(bullet, gun.transform.position, rotate.rotation);
             timer = 0;
         }
         
@@ -69,6 +73,16 @@ public class TurretControl : MonoBehaviour
         else
         {
             isShooting = false;
+        }
+    }
+
+    public void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Bullet"))
+        {
+            Destroy(other.gameObject);
+            health--;
+            Debug.Log("Turret Health: " + health);
         }
     }
 }
