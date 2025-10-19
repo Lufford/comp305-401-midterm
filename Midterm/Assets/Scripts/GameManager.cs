@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Level"+level);
     }
-
+ 
     public void SetGameOver()
     {
         levelScore[level] = score;
@@ -87,7 +87,9 @@ public class GameManager : MonoBehaviour
         Debug.Log("Level Changed");
         levelScore[level] = score; 
 
-        yield return 1f;
+        
+        yield return new WaitForSecondsRealtime(1f);
+        
 
         level++;
         score = 0;
