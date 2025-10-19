@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -46,6 +47,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
         currentHealth = maxHealth;
+        Debug.Log(currentHealth);
     }
 
     void Update()
@@ -82,20 +84,21 @@ public class PlayerController : MonoBehaviour
         }
         cooldownTimer += Time.deltaTime;
 
-        //checking for game over
-        if (currentHealth <= 0)
-        {
-            currentHealth = 0;
-            SceneManager.LoadScene("GameOverScreen");
-        }
+        // checking for game over
+         if (currentHealth <= 0)
+         {
+             currentHealth = 0;
+             SceneManager.LoadScene("GameOverScreen");
+         }
     }
-    
-    void OnTriggerEnter2D(Collider2D other)
+
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (currentHealth > 0)
+        if (other.gameObject.CompareTag("EnemyBullet") && currentHealth > 0)
         {
-            currentHealth = -damageAmount;
-            
+            Destroy(other.gameObject );
+            currentHealth -= damageAmount;
+        
             //UI change
             healthBar.value = currentHealth;
         }
