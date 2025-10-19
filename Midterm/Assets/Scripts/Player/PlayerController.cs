@@ -88,7 +88,7 @@ public class PlayerController : MonoBehaviour
          if (currentHealth <= 0)
          {
              currentHealth = 0;
-             SceneManager.LoadScene("GameOverScreen");
+             GameManager.Instance.SetGameOver();
          }
     }
 
