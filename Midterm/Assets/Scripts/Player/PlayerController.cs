@@ -94,9 +94,15 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        ShieldMechanics shield = GetComponent<ShieldMechanics>();
+        if(shield != null && shield.IsShieldActive)
+        {
+            return;
+        }
+
         if (other.gameObject.CompareTag("EnemyBullet") && currentHealth > 0)
         {
-            Destroy(other.gameObject );
+            Destroy(other.gameObject);
             currentHealth -= damageAmount;
         
             //UI change
