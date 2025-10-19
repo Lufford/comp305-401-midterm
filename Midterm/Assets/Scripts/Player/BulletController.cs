@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class BulletController : MonoBehaviour
@@ -10,5 +11,13 @@ public class BulletController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         rb.AddForce(transform.right * speed);
         Destroy(gameObject, 1f);
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.tag == "Ground")
+        {
+            Destroy(gameObject);
+        }
     }
 }

@@ -8,6 +8,7 @@ TagManager:
   - Bullet
   - EnemyBullet
   - Scoreboard
+  - Ground
   layers:
   - Default
   - TransparentFX
