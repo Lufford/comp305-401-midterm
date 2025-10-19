@@ -30,7 +30,6 @@ public class GameManager : MonoBehaviour
     void OnSceneLoad(Scene scene, LoadSceneMode mode)
     {
         Debug.Log(scene.name);
-        Debug.Log(mode.ToString());
         if (scene.name.Equals("TitleScreen") || scene.name.Equals("GameOverScreen"))
         {
             gameOver = true;
@@ -55,7 +54,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log(level);
+        Debug.Log("Level"+level);
     }
 
     private void Update()
@@ -89,8 +88,9 @@ public class GameManager : MonoBehaviour
     }
 
     //allows you to change the level
-    private IEnumerator LevelChange()
+    public IEnumerator LevelChange()
     {
+        Debug.Log("Level Changed");
         levelTransitioning = true;
         levelScore[level] = score; 
 
@@ -103,9 +103,6 @@ public class GameManager : MonoBehaviour
 
         SceneManager.LoadScene(level);
         levelTransitioning = false;
-
-        StartCoroutine(FindScoreBoard());
-
     }
 
     private IEnumerator FindScoreBoard()
@@ -120,7 +117,7 @@ public class GameManager : MonoBehaviour
         if (gameOver)
         {
             string result = "Final Scores:\n";
-            for (int i = 1; i <= 3; i++)
+            for (int i = 1; i < 3; i++)
             {
                 if (levelScore.ContainsKey(i))
                     result += $"Level {i}: {levelScore[i]}\n";
